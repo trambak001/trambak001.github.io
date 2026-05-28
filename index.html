@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Het Bhatiya — Analyst & Author</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F9F7F4;
+    --text: #1A1916;
+    --muted: #6B6860;
+    --border: #E2DED8;
+    --analyst-bg: #EEF3F9;
+    --analyst-accent: #1B4F8A;
+    --analyst-light: #C8DAEF;
+    --writer-bg: #F2EEF8;
+    --writer-accent: #5B3A8E;
+    --writer-light: #D8CCF0;
+    --active-bg: var(--bg);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,247,244,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    padding: 100px 5vw 80px;
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(38px, 7vw, 68px);
+    font-weight: 400;
+    line-height: 1.12;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--muted);
+  }
+  .hero-tagline {
+    font-size: 17px;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+  }
+  .hero-question {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  /* SPLIT PANELS */
+  .split-section {
+    padding: 0 5vw 80px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 640px) { .split-grid { grid-template-columns: 1fr; } }
+
+  .panel {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: all var(--transition);
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .panel.analyst::before { background: var(--analyst-bg); }
+  .panel.writer::before { background: var(--writer-bg); }
+  .panel:hover::before, .panel.active::before { opacity: 1; }
+  .panel > * { position: relative; z-index: 1; }
+
+  .panel-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+    transition: transform 0.3s;
+  }
+  .panel:hover .panel-icon { transform: scale(1.1); }
+  .panel.analyst.active .panel-icon { color: var(--analyst-accent); }
+  .panel.writer.active .panel-icon { color: var(--writer-accent); }
+
+  .panel-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+  .panel.analyst.active .panel-title { color: var(--analyst-accent); }
+  .panel.writer.active .panel-title { color: var(--writer-accent); }
+
+  .panel-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .panel-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: all 0.3s;
+  }
+  .panel.analyst.active .tag { border-color: var(--analyst-light); background: var(--analyst-bg); color: var(--analyst-accent); }
+  .panel.writer.active .tag { border-color: var(--writer-light); background: var(--writer-bg); color: var(--writer-accent); }
+
+  /* DYNAMIC CONTENT SECTION */
+  .content-section {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 5vw 80px;
+  }
+  .content-block {
+    display: none;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .content-block.visible { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .content-header {
+    border-left: 3px solid var(--border);
+    padding-left: 20px;
+    margin-bottom: 40px;
+  }
+  .analyst .content-header { border-color: var(--analyst-accent); }
+  .writer .content-header { border-color: var(--writer-accent); }
+
+  .content-tagline {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 400;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+  .content-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* WORK GRID */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .work-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .work-card:hover { border-color: #aaa; transform: translateY(-2px); }
+  .work-type {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .work-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .work-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* CTA ROW */
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--sans);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary-analyst {
+    background: var(--analyst-accent);
+    color: white;
+    border: 1px solid var(--analyst-accent);
+  }
+  .btn-primary-analyst:hover { opacity: 0.88; }
+  .btn-primary-writer {
+    background: var(--writer-accent);
+    color: white;
+    border: 1px solid var(--writer-accent);
+  }
+  .btn-primary-writer:hover { opacity: 0.88; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: #aaa; background: white; }
+
+  /* ABOUT SECTION */
+  .about-section {
+    border-top: 1px solid var(--border);
+    padding: 80px 5vw;
+    max-width: 920px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 640px) { .about-section { grid-template-columns: 1fr; gap: 32px; } }
+  .about-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 5px;
+  }
+  .about-body h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+  .about-body p {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.75;
+  }
+  .about-stats {
+    display: flex; gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* BOOK SECTION */
+  .book-section {
+    border-top: 1px solid var(--border);
+    padding: 80px 5vw;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .book-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 640px) { .book-inner { grid-template-columns: 1fr; } }
+  .book-cover {
+    width: 140px;
+    height: 200px;
+    background: var(--writer-bg);
+    border: 1px solid var(--writer-light);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .book-cover img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+  .book-cover-placeholder {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--writer-accent);
+    text-align: center;
+    padding: 12px;
+    line-height: 1.4;
+    font-style: italic;
+  }
+  .book-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--writer-accent);
+    margin-bottom: 10px;
+  }
+  .book-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .book-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 20px;
+    max-width: 460px;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    border-top: 1px solid var(--border);
+    padding: 80px 5vw;
+    max-width: 920px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-section h2 {
+    font-family: var(--serif);
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .contact-section p {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 400px;
+    margin-left: auto; margin-right: auto;
+  }
+  .contact-links {
+    display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  footer p { font-size: 12px; color: var(--muted); }
+  footer a { color: var(--muted); text-decoration: none; font-size: 12px; }
+  footer a:hover { color: var(--text); }
+  .footer-links {
+    display: flex;
+    gap: 14px;
+  }
+
+  /* DIVIDER */
+  .divider { max-width: 920px; margin: 0 auto; padding: 0 5vw; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-name">Het Bhatiya</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#book">Book</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Portfolio · Gujarat, India</p>
+  <h1 class="hero-name">Het Bhatiya<br><em>Analyst & Author</em></h1>
+  <p class="hero-tagline">
+    I decode financial complexity — and then write about it in a way that actually makes sense.
+  </p>
+  <p class="hero-question">What brings you here?</p>
+</section>
+
+<!-- SPLIT PANELS -->
+<section class="split-section">
+  <div class="split-grid">
+    <div class="panel analyst active" id="panel-analyst" onclick="selectIdentity('analyst')" role="button" tabindex="0">
+      <span class="panel-icon">&#9783;</span>
+      <h2 class="panel-title">Finance & Analysis</h2>
+      <p class="panel-desc">Reports, market research, financial modelling, freelance data projects</p>
+      <div class="panel-tags">
+        <span class="tag">Financial Analysis</span>
+        <span class="tag">Market Research</span>
+        <span class="tag">Freelance</span>
+        <span class="tag">Data</span>
+      </div>
+    </div>
+    <div class="panel writer" id="panel-writer" onclick="selectIdentity('writer')" role="button" tabindex="0">
+      <span class="panel-icon">&#9998;</span>
+      <h2 class="panel-title">Writing & Authorship</h2>
+      <p class="panel-desc">Books, long-form articles, financial commentary, editorial projects</p>
+      <div class="panel-tags">
+        <span class="tag">Author</span>
+        <span class="tag">Articles</span>
+        <span class="tag">Finance Writing</span>
+        <span class="tag">Books</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYST CONTENT -->
+<section class="content-section" id="work">
+  <div class="content-block analyst visible" id="content-analyst">
+    <div class="content-header analyst">
+      <h2 class="content-tagline">I turn financial complexity into clear decisions.</h2>
+      <p class="content-sub">Freelance analyst based in Gujarat, working with clients on market research, financial reports, and data-driven insights. Available for project-based work globally.</p>
+    </div>
+    <div class="work-grid">
+      <a class="work-card" href="https://github.com/trambak001/ALLOIL" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">ALLOIL</p>
+        <p class="work-meta">JavaScript</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/Sql-Data-Warehouse-Project" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">Sql-Data-Warehouse-Project</p>
+        <p class="work-meta">TSQL - Data warehouse and ETL analytics</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/WUDownloadCache" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">WUDownloadCache</p>
+        <p class="work-meta">Utility project</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/diwali-fireworks" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">diwali-fireworks</p>
+        <p class="work-meta">JavaScript - P5.js animation</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/hh" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">hh</p>
+        <p class="work-meta">JavaScript</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/rakshak_ai" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">rakshak_ai</p>
+        <p class="work-meta">Python</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/Air_canvas" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">Air_canvas</p>
+        <p class="work-meta">Python - Computer vision canvas</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/3d-model-viewer" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">3d-model-viewer</p>
+        <p class="work-meta">JavaScript - Three.js viewer</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/invoice-extractor" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">invoice-extractor</p>
+        <p class="work-meta">Kotlin - OCR invoice extraction</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/city_india" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">city_india</p>
+        <p class="work-meta">Jupyter Notebook</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/io" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">io</p>
+        <p class="work-meta">JavaScript</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/transient-talk" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">transient-talk</p>
+        <p class="work-meta">TypeScript</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/jarvis" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">jarvis</p>
+        <p class="work-meta">Python</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/vac2" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">vac2</p>
+        <p class="work-meta">CSS - Typing practice website</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/Bake" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Project</p>
+        <p class="work-title">Bake</p>
+        <p class="work-meta">HTML</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001/trambak001" target="_blank" rel="noopener">
+        <p class="work-type">GitHub Profile Repo</p>
+        <p class="work-title">trambak001</p>
+        <p class="work-meta">HTML - Profile configuration</p>
+      </a>
+    </div>
+    <div class="cta-row">
+      <a href="https://github.com/trambak001" target="_blank" rel="noopener" class="btn btn-primary-analyst">View GitHub Projects &rarr;</a>
+      <a href="#contact" class="btn btn-ghost">Hire me for a project</a>
+    </div>
+  </div>
+
+  <!-- WRITER CONTENT -->
+  <div class="content-block writer" id="content-writer">
+    <div class="content-header writer">
+      <h2 class="content-tagline">I write about money, markets, and what they mean for people.</h2>
+      <p class="content-sub">Author and financial writer based in Gujarat. My work bridges data and narrative — making complex financial ideas readable, relevant, and real.</p>
+    </div>
+    <div class="work-grid">
+      <a class="work-card" href="#book">
+        <p class="work-type">Book</p>
+        <p class="work-title">The Indian Debt Trap: Roots, Realities, and Remedies</p>
+        <p class="work-meta">Kindle Edition - 2025</p>
+      </a>
+      <a class="work-card" href="https://www.linkedin.com/in/bhatiyahet" target="_blank" rel="noopener">
+        <p class="work-type">Article</p>
+        <p class="work-title">Financial writing and article updates</p>
+        <p class="work-meta">LinkedIn profile</p>
+      </a>
+      <a class="work-card" href="https://www.amazon.in/dp/B0G5QFLT5T" target="_blank" rel="noopener">
+        <p class="work-type">Essay</p>
+        <p class="work-title">Debt, policy, and everyday financial stress in India</p>
+        <p class="work-meta">Core theme in current book</p>
+      </a>
+      <a class="work-card" href="https://github.com/trambak001" target="_blank" rel="noopener">
+        <p class="work-type">Long-form</p>
+        <p class="work-title">Technical project notes and experiments</p>
+        <p class="work-meta">GitHub</p>
+      </a>
+    </div>
+    <div class="cta-row">
+      <a href="#book" class="btn btn-primary-writer">Read my book &rarr;</a>
+      <a href="#contact" class="btn btn-ghost">Commission a piece</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div>
+    <p class="about-label">About</p>
+  </div>
+  <div class="about-body">
+    <h2>From Gujarat — <em>thinking in numbers, writing in stories.</em></h2>
+    <p>
+      I started in finance because I wanted to understand how systems work. I started writing because I wanted to explain those systems to people who don't live inside spreadsheets. That combination — rigorous analysis + clear narrative — is the thread that runs through everything I do.
+    </p>
+    <p>
+      Today I work as a freelance analyst and financial writer. I've built financial models, written market research reports, published a book, and contributed articles on money, markets, and economic life in India. I'm based in Gujarat and work with clients worldwide.
+    </p>
+    <p>
+      I believe the best financial insight is the one that changes how people act in real life, not just what looks good in a spreadsheet.
+    </p>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-num">16</div>
+        <div class="stat-label">Public repositories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">61</div>
+        <div class="stat-label">Book pages</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Published book</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.0</div>
+        <div class="stat-label">Amazon rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="book-section" id="book">
+  <div class="book-inner">
+    <div class="book-cover">
+      <img src="https://m.media-amazon.com/images/I/71bdNu0RR4L._SY342_.jpg" alt="The Indian Debt Trap book cover">
+    </div>
+    <div>
+      <p class="book-label">Book</p>
+      <h2 class="book-title">The Indian Debt Trap: Roots, Realities, and Remedies</h2>
+      <p class="book-desc">
+        India has never been short on dreams, but increasingly those dreams are funded by debt. This book explores how loans shape households, workers, and policy, combining real stories with data to explain the emotional and economic cost of borrowed growth.
+      </p>
+      <div class="cta-row">
+        <a href="https://amzn.in/d/08vzQ8GP" target="_blank" rel="noopener" class="btn btn-primary-writer">Buy the book &rarr;</a>
+        <a href="https://www.amazon.in/dp/B0G5QFLT5T" target="_blank" rel="noopener" class="btn btn-ghost">View on Amazon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <h2>Let's work together.</h2>
+  <p>Whether you need financial analysis, a research report, or a writer who understands numbers — reach out.</p>
+  <div class="contact-links">
+    <a href="mailto:hetbhatiya2006@gmail.com" class="btn btn-primary-analyst">Email me &rarr;</a>
+    <a href="https://www.linkedin.com/in/bhatiyahet" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+    <a href="https://github.com/trambak001" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Het Bhatiya &mdash; Junagadh, Gujarat</p>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/bhatiyahet" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/trambak001" target="_blank" rel="noopener">GitHub</a>
+    <a href="mailto:hetbhatiya2006@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  function selectIdentity(type) {
+    var panels = document.querySelectorAll('.panel');
+    panels.forEach(function(p) { p.classList.remove('active'); });
+
+    var blocks = document.querySelectorAll('.content-block');
+    blocks.forEach(function(b) { b.classList.remove('visible'); });
+
+    document.getElementById('panel-' + type).classList.add('active');
+    document.getElementById('content-' + type).classList.add('visible');
+
+    var target = document.getElementById('work');
+    if (target) {
+      setTimeout(function() {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
+  }
+
+  document.querySelectorAll('.panel').forEach(function(panel) {
+    panel.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        panel.click();
+      }
+    });
+  });
+</script>
+</body>
+</html>
