@@ -455,6 +455,164 @@
   .linkedin-card a { color: var(--analyst-accent); text-decoration: none; }
   .linkedin-card a:hover { text-decoration: underline; }
 
+  /* TIMELINE */
+  .timeline-section {
+    padding: 80px 5vw;
+    max-width: 920px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+  }
+  .timeline-header {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+    border-left: 2px solid var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -31px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--analyst-accent);
+    border: 2px solid var(--bg);
+  }
+  .timeline-date {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .timeline-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* LINKEDIN ARTICLES */
+  .articles-section {
+    padding: 80px 5vw;
+    max-width: 920px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+  }
+  .articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+  }
+  .articles-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 400;
+  }
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .article-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .article-card:hover { border-color: var(--analyst-accent); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .article-tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--analyst-accent);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .article-title {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .article-excerpt {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  .article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(26,25,22,0.8); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    padding: 20px;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal-content {
+    background: white; border-radius: 12px;
+    width: 100%; max-width: 600px;
+    padding: 40px; position: relative;
+    transform: translateY(20px); transition: transform 0.3s;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-overlay.open .modal-content { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    font-size: 24px; color: var(--muted); cursor: pointer;
+    background: none; border: none;
+  }
+  .modal-close:hover { color: var(--text); }
+  .lead-form h3 { font-family: var(--serif); font-size: 24px; margin-bottom: 12px; }
+  .lead-form p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; text-align: left; }
+  .form-group label { display: block; font-size: 12px; font-weight: 500; margin-bottom: 6px; }
+  .form-group input {
+    width: 100%; padding: 12px 14px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: var(--sans); font-size: 14px;
+  }
+  .form-group input:focus { outline: none; border-color: var(--analyst-accent); }
+  .submit-btn {
+    width: 100%; background: var(--analyst-accent); color: white;
+    border: none; padding: 14px; border-radius: 6px;
+    font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.9; }
+
   /* DIVIDER */
   .divider { max-width: 920px; margin: 0 auto; padding: 0 5vw; }
 </style>
@@ -649,6 +807,37 @@
   </div>
 </section>
 
+<!-- JOURNEY TIMELINE -->
+<section class="timeline-section" id="journey">
+  <h2 class="timeline-header">My Journey: From Paint to Production</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Initial Exploration</div>
+      <h3 class="timeline-title">Cultivating Curiosity</h3>
+      <p class="timeline-desc">Began my digital exploration through fundamental tools like MS Paint, establishing a strong baseline curiosity for technology and design.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Logic & Coding</div>
+      <h3 class="timeline-title">Building the Foundation</h3>
+      <p class="timeline-desc">Transitioned from visual interfaces to programmatic logic, establishing a firm foundation in coding and systems architecture.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Data Specialization</div>
+      <h3 class="timeline-title">Pivoting to Data Science</h3>
+      <p class="timeline-desc">Mastered Python, SQL, and Pandas, developing the technical acumen required to extract actionable insights from complex datasets.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Present Day</div>
+      <h3 class="timeline-title">Production-Ready Projects</h3>
+      <p class="timeline-desc">Currently executing end-to-end data pipelines, predictive models, and comprehensive full-stack applications with real-world impact.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div>
@@ -657,13 +846,13 @@
   <div class="about-body">
     <h2>From Gujarat — <em>thinking in numbers, writing in stories.</em></h2>
     <p>
-      I started in finance because I wanted to understand how systems work. I started writing because I wanted to explain those systems to people who don't live inside spreadsheets. That combination — rigorous analysis + clear narrative — is the thread that runs through everything I do.
+      I started my career navigating the transition from simple spreadsheets to complex databases. A defining phase of my professional journey involved <strong>mentoring colleagues, successfully guiding their technical transition from Excel Macros to robust, scalable SQL database management</strong>. This experience honed my ability to communicate highly technical concepts with clarity.
     </p>
     <p>
-      Today I work as a freelance analyst and financial writer. I've built financial models, written market research reports, published a book, and contributed articles on money, markets, and economic life in India. I'm based in Gujarat and work with clients worldwide.
+      Today, as a Data Science student and freelance analyst in Gujarat, I bring that same clarity to my work. I have architected data warehouses, developed interactive dashboards, published literature, and contributed articles focused on data strategy and financial modeling.
     </p>
     <p>
-      I believe the best financial insight is the one that changes how people act in real life, not just what looks good in a spreadsheet.
+      I firmly believe that the most valuable data insight is one that is accessible to decision-makers across an organization, not just those who live inside spreadsheets.
     </p>
     <div class="about-stats">
       <div class="stat-item">
@@ -703,6 +892,34 @@
         <a href="https://www.amazon.in/dp/B0G5QFLT5T" target="_blank" rel="noopener" class="btn btn-ghost">View on Amazon</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- LINKEDIN ARTICLES -->
+<section class="articles-section" id="articles">
+  <div class="articles-header">
+    <h2 class="articles-title">Latest Insights</h2>
+    <a href="https://www.linkedin.com/in/bhatiyahet" target="_blank" rel="noopener" class="btn btn-ghost">View LinkedIn Profile</a>
+  </div>
+  <div class="article-grid">
+    <a href="#" class="article-card" onclick="openArticleModal(event, 'Article 1')">
+      <span class="article-tag">Data Science</span>
+      <h3 class="article-title">[Insert Your LinkedIn Article Title Here]</h3>
+      <p class="article-excerpt">[Paste a short 2-3 sentence summary of your article here to grab the reader's attention.]</p>
+      <div class="article-footer">
+        <span>Read full article</span>
+        <span>&rarr;</span>
+      </div>
+    </a>
+    <a href="#" class="article-card" onclick="openArticleModal(event, 'Article 2')">
+      <span class="article-tag">Finance & SQL</span>
+      <h3 class="article-title">[Insert Your Second Article Title Here]</h3>
+      <p class="article-excerpt">[Paste the summary for your second article here. Visitors will click this to read more on your site.]</p>
+      <div class="article-footer">
+        <span>Read full article</span>
+        <span>&rarr;</span>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -755,6 +972,44 @@
       }
     });
   });
+
+  // Modal Logic
+  function openArticleModal(e, articleId) {
+    e.preventDefault();
+    document.getElementById('article-modal').classList.add('open');
+  }
+  function closeArticleModal() {
+    document.getElementById('article-modal').classList.remove('open');
+  }
+  function handleArticleSubmit(e) {
+    e.preventDefault();
+    var name = document.getElementById('readerName').value;
+    alert('Thank you, ' + name + '! Your request to read has been logged. (In production, this would reveal the article below).');
+    closeArticleModal();
+  }
 </script>
+
+<!-- ARTICLE MODAL -->
+<div class="modal-overlay" id="article-modal" onclick="if(event.target===this) closeArticleModal()">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeArticleModal()">&times;</button>
+    <div class="lead-form">
+      <h3>Read the Full Article</h3>
+      <p>Enter your details below to unlock this insight directly from Het Bhatiya. (Lead capture enabled)</p>
+      <form onsubmit="handleArticleSubmit(event)">
+        <div class="form-group">
+          <label for="readerName">Full Name</label>
+          <input type="text" id="readerName" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label for="readerEmail">Email Address</label>
+          <input type="email" id="readerEmail" required placeholder="john@example.com">
+        </div>
+        <button type="submit" class="submit-btn">Continue Reading &rarr;</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
